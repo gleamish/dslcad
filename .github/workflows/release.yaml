@@ -1,9 +1,15 @@
 name: Generate Release Artifacts
 
+# on:
+#   release:
+#     types: [ created ]
+#   workflow_dispatch:
+
 on:
-  release:
-    types: [ created ]
+  push:
+  pull_request:
   workflow_dispatch:
+
 
 env:
   CARGO_TERM_COLOR: always
@@ -12,22 +18,22 @@ permissions:
   contents: write
 
 jobs:
-  vscode:
-    name: VSCode Extension
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: extractions/setup-just@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 23
-          registry-url: https://registry.npmjs.org/
-      - run: npm i -g vsce
-      - run: just build-vscode-extension
-      - uses: actions/upload-artifact@v4
-        with:
-          name: dslcad.vsix
-          path: ./dslcad.vsix
+  # vscode:
+  #   name: VSCode Extension
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: extractions/setup-just@v2
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 23
+  #         registry-url: https://registry.npmjs.org/
+  #     - run: npm i -g vsce
+  #     - run: just build-vscode-extension
+  #     - uses: actions/upload-artifact@v4
+  #       with:
+  #         name: dslcad.vsix
+  #         path: ./dslcad.vsix
 
   examples:
     name: Examples
