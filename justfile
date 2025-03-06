@@ -9,7 +9,7 @@ build *FLAGS:
     set -ex
 
     if [ "{{ TARGET }}" == "wasm32-unknown-emscripten" ]; then
-      FLAGS="--no-default-features";
+      FLAGS="--no-default-features --cfg=web_sys_unstable_apis";
       export CXXFLAGS="-DRUST_CXX_NO_EXCEPTIONS=ON";
     elif [ "{{ TARGET }}" == "wasm32-unknown-unknown" ]; then
         exit 0
